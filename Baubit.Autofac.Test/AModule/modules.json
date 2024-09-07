@@ -1,0 +1,13 @@
+{
+  "modules": [
+    {
+      "type": "Baubit.Autofac.Test.AModule.Module, Baubit.Autofac.Test",
+      "parameters": {
+        "moduleConfiguration": {
+          "IntProperty": 3,
+          "StringProperty": "Some string property"
+        }
+      }
+    }
+  ]
+}
