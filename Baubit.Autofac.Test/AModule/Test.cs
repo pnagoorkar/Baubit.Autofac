@@ -22,3 +22,4 @@ namespace Baubit.Autofac.Test.AModule
         }
     }
 }
+
