@@ -6,12 +6,16 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <Version>$(PackageVersion)</Version>
+    <AssemblyVersion>$(PackageVersion)</AssemblyVersion>
+    <FileVersion>$(PackageVersion)</FileVersion>
+    <InformationalVersion>$(PackageVersion)</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
-    <PackageReference Include="Baubit" Version="2024.36.3" />
+    <PackageReference Include="Baubit" Version="2024.37.2" />
   </ItemGroup>
 
 </Project>

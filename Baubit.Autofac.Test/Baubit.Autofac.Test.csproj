@@ -11,10 +11,12 @@
 
   <ItemGroup>
     <None Remove="AModule\modules.json" />
+    <None Remove="AModule\modules_ThreeLevelDeep.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="AModule\modules.json" />
+    <EmbeddedResource Include="AModule\modules_ThreeLevelDeep.json" />
   </ItemGroup>
 
   <ItemGroup>
