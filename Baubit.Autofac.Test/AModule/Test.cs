@@ -13,9 +13,8 @@ namespace Baubit.Autofac.Test.AModule
         {
             var readResult = await Baubit.Resource
                                          .Operations
-                                         .ReadEmbeddedResource
-                                         .RunAsync(new Resource.ReadEmbeddedResource.Context($"{this.GetType().Namespace}.{jsonFile}", Assembly.GetExecutingAssembly()));
-            Assert.True(readResult.Success);
+                                         .ReadEmbeddedResourceAsync(new Resource.EmbeddedResourceReadContext($"{this.GetType().Namespace}.{jsonFile}", Assembly.GetExecutingAssembly()));
+            Assert.True(readResult.IsSuccess);
             var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };
             var modules = metaConfiguration.Load().GetNestedModules();
             Assert.NotEmpty(modules);
@@ -28,10 +27,9 @@ namespace Baubit.Autofac.Test.AModule
         {
             var readResult = await Baubit.Resource
                                          .Operations
-                                         .ReadEmbeddedResource
-                                         .RunAsync(new Resource.ReadEmbeddedResource.Context($"{this.GetType().Namespace}.{jsonFile}", Assembly.GetExecutingAssembly()));
+                                         .ReadEmbeddedResourceAsync(new Resource.EmbeddedResourceReadContext($"{this.GetType().Namespace}.{jsonFile}", Assembly.GetExecutingAssembly()));
 
-            Assert.True(readResult.Success);
+            Assert.True(readResult.IsSuccess);
             var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };
             var modules = metaConfiguration.Load().GetNestedModules();
 

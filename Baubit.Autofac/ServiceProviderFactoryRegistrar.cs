@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Baubit.Autofac
 {
-    public sealed class ServiceProviderMetaFactory : IServiceProviderMetaFactory
+    public sealed class ServiceProviderFactoryRegistrar : IServiceProviderFactoryRegistrar
     {
         private RootModule _rootModule;
         public IHostApplicationBuilder UseConfiguredServiceProviderFactory(IHostApplicationBuilder hostApplicationBuilder)
