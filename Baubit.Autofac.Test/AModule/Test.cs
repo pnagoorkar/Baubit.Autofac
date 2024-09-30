@@ -15,7 +15,7 @@ namespace Baubit.Autofac.Test.AModule
             var readResult = await Assembly.GetExecutingAssembly().ReadResource($"{this.GetType().Namespace}.{jsonFile}");
             Assert.True(readResult.IsSuccess);
             var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };
-            var modules = metaConfiguration.Load().GetNestedModules();
+            var modules = metaConfiguration.Load().GetNestedModules<Baubit.Autofac.AModule>();
             Assert.NotEmpty(modules);
             Assert.Single(modules);
             Assert.NotNull(modules.First().ModuleConfiguration);
@@ -28,7 +28,7 @@ namespace Baubit.Autofac.Test.AModule
 
             Assert.True(readResult.IsSuccess);
             var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };
-            var modules = metaConfiguration.Load().GetNestedModules();
+            var modules = metaConfiguration.Load().GetNestedModules<Baubit.Autofac.AModule>();
 
             Assert.Equal(3, modules.Sum(m => m.CountTotalNodes()));
             Assert.Equal(3, modules.Max(m => m.CountNodesInDeepestSubgraph()));
@@ -37,7 +37,7 @@ namespace Baubit.Autofac.Test.AModule
 
             var jsonString = JsonSerializer.Serialize(new { Modules = modules }, options);
 
-            var reloadedModules = new MetaConfiguration { RawJsonStrings = [jsonString] }.Load().GetNestedModules();
+            var reloadedModules = new MetaConfiguration { RawJsonStrings = [jsonString] }.Load().GetNestedModules<Baubit.Autofac.AModule>();
 
             Assert.Equal(3, reloadedModules.Sum(m => m.CountTotalNodes()));
             Assert.Equal(3, reloadedModules.Max(m => m.CountNodesInDeepestSubgraph()));

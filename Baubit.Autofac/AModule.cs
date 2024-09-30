@@ -53,7 +53,7 @@ namespace Baubit.Autofac
         }
 
         protected AModule(IConfiguration configuration) : this(configuration.Load<TConfiguration>(),
-                                                               configuration.GetNestedModules().ToList())
+                                                               configuration.GetNestedModules<AModule>().ToList())
         {
 
         }
