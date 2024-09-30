@@ -1,5 +1,6 @@
 ﻿using Baubit.Configuration;
 using Baubit.DI;
+using Baubit.Store;
 using System.Reflection;
 using System.Text.Json;
 
@@ -11,9 +12,7 @@ namespace Baubit.Autofac.Test.AModule
         [InlineData($"modules.json")]
         public async void CanLoadModuleConfiguration_FromMetaConfiguration_UsingASingleJsonString(string jsonFile)
         {
-            var readResult = await Baubit.Resource
-                                         .Operations
-                                         .ReadEmbeddedResourceAsync(new Resource.EmbeddedResourceReadContext($"{this.GetType().Namespace}.{jsonFile}", Assembly.GetExecutingAssembly()));
+            var readResult = await Assembly.GetExecutingAssembly().ReadResource($"{this.GetType().Namespace}.{jsonFile}");
             Assert.True(readResult.IsSuccess);
             var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };
             var modules = metaConfiguration.Load().GetNestedModules();
@@ -25,9 +24,7 @@ namespace Baubit.Autofac.Test.AModule
         [InlineData($"modules_ThreeLevelDeep.json")]
         public async void ModulesAreSerializable(string jsonFile)
         {
-            var readResult = await Baubit.Resource
-                                         .Operations
-                                         .ReadEmbeddedResourceAsync(new Resource.EmbeddedResourceReadContext($"{this.GetType().Namespace}.{jsonFile}", Assembly.GetExecutingAssembly()));
+            var readResult = await Assembly.GetExecutingAssembly().ReadResource($"{this.GetType().Namespace}.{jsonFile}");
 
             Assert.True(readResult.IsSuccess);
             var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };

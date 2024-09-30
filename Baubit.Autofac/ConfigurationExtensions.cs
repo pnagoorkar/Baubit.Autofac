@@ -1,5 +1,5 @@
 ﻿using Baubit.Configuration;
-using FluentResults;
+using Baubit.Store;
 using Microsoft.Extensions.Configuration;
 
 namespace Baubit.Autofac
@@ -41,7 +41,7 @@ namespace Baubit.Autofac
         public static bool TryGetModuleType(this IConfigurationSection configurationSection, out Type moduleType)
         {
             moduleType = null;
-            var resolutionResult = Baubit.Store.Operations.ResolveTypeAsync(new Store.TypeResolutionContext(configurationSection["type"])).GetAwaiter().GetResult();
+            var resolutionResult = TypeResolver.ResolveTypeAsync(configurationSection["type"]!).GetAwaiter().GetResult();
             if (resolutionResult.IsSuccess)
             {
                 moduleType = resolutionResult.Value;
