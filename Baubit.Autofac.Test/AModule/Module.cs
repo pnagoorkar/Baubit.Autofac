@@ -5,7 +5,7 @@ namespace Baubit.Autofac.Test.AModule
 {
     public class Module : AModule<ModuleConfiguration>
     {
-        public Module(MetaConfiguration metaConfiguration) : base(metaConfiguration)
+        public Module(ConfigurationSource configurationSource) : base(configurationSource)
         {
         }
 

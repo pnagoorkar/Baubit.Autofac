@@ -11,7 +11,7 @@ namespace Baubit.Autofac
     }
     public sealed class RootModule : AModule<RootModuleConfiguration>
     {
-        public RootModule(MetaConfiguration metaConfiguration) : base(metaConfiguration)
+        public RootModule(ConfigurationSource configurationSource) : base(configurationSource)
         {
         }
 

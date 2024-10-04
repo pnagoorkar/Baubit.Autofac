@@ -47,7 +47,7 @@ namespace Baubit.Autofac
         {
             get => (TConfiguration?)base.ModuleConfiguration;
         }
-        protected AModule(MetaConfiguration metaConfiguration) : this(metaConfiguration.Load())
+        protected AModule(ConfigurationSource configurationSource) : this(configurationSource.Load())
         {
 
         }

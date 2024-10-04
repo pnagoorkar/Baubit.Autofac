@@ -10,12 +10,12 @@ namespace Baubit.Autofac.Test.AModule
     {
         [Theory]
         [InlineData($"modules.json")]
-        public async void CanLoadModuleConfiguration_FromMetaConfiguration_UsingASingleJsonString(string jsonFile)
+        public async void CanLoadModuleConfiguration_FromConfigurationSource_UsingASingleJsonString(string jsonFile)
         {
             var readResult = await Assembly.GetExecutingAssembly().ReadResource($"{this.GetType().Namespace}.{jsonFile}");
             Assert.True(readResult.IsSuccess);
-            var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };
-            var modules = metaConfiguration.Load().GetNestedModules<Baubit.Autofac.AModule>();
+            var configurationSource = new ConfigurationSource { RawJsonStrings = [readResult.Value] };
+            var modules = configurationSource.Load().GetNestedModules<Baubit.Autofac.AModule>();
             Assert.NotEmpty(modules);
             Assert.Single(modules);
             Assert.NotNull(modules.First().ModuleConfiguration);
@@ -27,8 +27,8 @@ namespace Baubit.Autofac.Test.AModule
             var readResult = await Assembly.GetExecutingAssembly().ReadResource($"{this.GetType().Namespace}.{jsonFile}");
 
             Assert.True(readResult.IsSuccess);
-            var metaConfiguration = new MetaConfiguration { RawJsonStrings = [readResult.Value] };
-            var modules = metaConfiguration.Load().GetNestedModules<Baubit.Autofac.AModule>();
+            var configurationSource = new ConfigurationSource { RawJsonStrings = [readResult.Value] };
+            var modules = configurationSource.Load().GetNestedModules<Baubit.Autofac.AModule>();
 
             Assert.Equal(3, modules.Sum(m => m.CountTotalNodes()));
             Assert.Equal(3, modules.Max(m => m.CountNodesInDeepestSubgraph()));
@@ -37,7 +37,7 @@ namespace Baubit.Autofac.Test.AModule
 
             var jsonString = JsonSerializer.Serialize(new { Modules = modules }, options);
 
-            var reloadedModules = new MetaConfiguration { RawJsonStrings = [jsonString] }.Load().GetNestedModules<Baubit.Autofac.AModule>();
+            var reloadedModules = new ConfigurationSource { RawJsonStrings = [jsonString] }.Load().GetNestedModules<Baubit.Autofac.AModule>();
 
             Assert.Equal(3, reloadedModules.Sum(m => m.CountTotalNodes()));
             Assert.Equal(3, reloadedModules.Max(m => m.CountNodesInDeepestSubgraph()));
