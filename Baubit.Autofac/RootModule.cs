@@ -1,11 +1,10 @@
 ﻿using Autofac;
 using Baubit.Configuration;
-using Baubit.DI;
 using Microsoft.Extensions.Configuration;
 
 namespace Baubit.Autofac
 {
-    public sealed class RootModuleConfiguration : AModuleConfiguration
+    public sealed class RootModuleConfiguration : DI.AConfiguration
     {
 
     }

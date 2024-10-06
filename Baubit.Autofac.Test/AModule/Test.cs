@@ -18,7 +18,7 @@ namespace Baubit.Autofac.Test.AModule
             var modules = configurationSource.Load().GetNestedModules<Baubit.Autofac.AModule>();
             Assert.NotEmpty(modules);
             Assert.Single(modules);
-            Assert.NotNull(modules.First().ModuleConfiguration);
+            Assert.NotNull(modules.First().Configuration);
         }
         [Theory]
         [InlineData($"modules_ThreeLevelDeep.json")]

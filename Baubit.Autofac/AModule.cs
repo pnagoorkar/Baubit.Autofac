@@ -13,13 +13,13 @@ namespace Baubit.Autofac
     public abstract class AModule : Module
     {
         [JsonIgnore]
-        public AModuleConfiguration ModuleConfiguration { get; init; }
+        public DI.AConfiguration Configuration { get; init; }
         [JsonIgnore]
         public IReadOnlyList<AModule> NestedModules { get; init; }
 
-        public AModule(AModuleConfiguration moduleConfiguration, List<AModule> nestedModules)
+        public AModule(DI.AConfiguration moduleConfiguration, List<AModule> nestedModules)
         {
-            ModuleConfiguration = moduleConfiguration;
+            Configuration = moduleConfiguration;
             NestedModules = nestedModules.AsReadOnly();
             OnInitialized();
         }
@@ -41,11 +41,11 @@ namespace Baubit.Autofac
             base.Load(builder);
         }
     }
-    public abstract class AModule<TConfiguration> : AModule where TConfiguration : AModuleConfiguration
+    public abstract class AModule<TConfiguration> : AModule where TConfiguration : DI.AConfiguration
     {
-        public new TConfiguration? ModuleConfiguration
+        public new TConfiguration? Configuration
         {
-            get => (TConfiguration?)base.ModuleConfiguration;
+            get => (TConfiguration?)base.Configuration;
         }
         protected AModule(ConfigurationSource configurationSource) : this(configurationSource.Load())
         {
@@ -92,7 +92,7 @@ namespace Baubit.Autofac
 
         public static TModule Validate<TModule>(this TModule module) where TModule : AModule
         {
-            if (AModuleValidator<TModule>.CurrentValidators.TryGetValue(module.ModuleConfiguration.ModuleValidatorKey, out var validator))
+            if (AModuleValidator<TModule>.CurrentValidators.TryGetValue(module.Configuration.ModuleValidatorKey, out var validator))
             {
                 var validationResult = validator.Validate(module);
                 if (validationResult != null && !validationResult.IsValid)
@@ -119,11 +119,11 @@ namespace Baubit.Autofac
             writer.WritePropertyName("parameters");
             writer.WriteStartObject();
 
-            var serializedModuleConfiguration = value.ModuleConfiguration.SerializeJson(options);
+            var serializedModuleConfiguration = value.Configuration.SerializeJson(options);
 
             var serializedNestedModules = value.NestedModules.Select(nestedModule => JsonSerializer.Serialize(nestedModule, options));
 
-            writer.WritePropertyName(nameof(AModule.ModuleConfiguration));
+            writer.WritePropertyName(nameof(AModule.Configuration));
 
             if (serializedNestedModules.Any())
             {
