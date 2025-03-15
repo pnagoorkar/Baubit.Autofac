@@ -1,0 +1,16 @@
+{
+  "modules": [
+    {
+      "type": "ConsoleApp.MyModule, ConsoleApp",
+      "configuration": {
+        "myStringProperty": "some string value"
+      }
+    },
+    {
+      "type": "Baubit.Logging.DI.Default.Module, Baubit",
+      "configuration": {
+        "addConsole": true
+      }
+    }
+  ]
+}
