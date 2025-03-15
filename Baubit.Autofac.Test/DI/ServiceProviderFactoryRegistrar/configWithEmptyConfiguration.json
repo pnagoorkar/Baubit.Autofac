@@ -1,0 +1,10 @@
+{
+  "modules": [
+    {
+      "type": "Baubit.Autofac.Test.DI.Setup.Module, Baubit.Autofac.Test",
+      "configuration": {
+
+      }
+    }
+  ]
+}

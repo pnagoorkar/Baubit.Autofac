@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -10,23 +10,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="AModule\modules.json" />
-    <None Remove="AModule\modules_ThreeLevelDeep.json" />
+    <None Remove="DI\ServiceProviderFactoryRegistrar\config.json" />
+    <None Remove="DI\ServiceProviderFactoryRegistrar\configWithEmptyConfiguration.json" />
+    <None Remove="DI\ServiceProviderFactoryRegistrar\configWithEmptyConfigurationSource.json" />
+    <None Remove="DI\ServiceProviderFactoryRegistrar\configWithSecrets.json" />
+    <None Remove="DI\ServiceProviderFactoryRegistrar\secrets.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="AModule\modules.json" />
-    <EmbeddedResource Include="AModule\modules_ThreeLevelDeep.json" />
+    <EmbeddedResource Include="DI\ServiceProviderFactoryRegistrar\config.json" />
+    <EmbeddedResource Include="DI\ServiceProviderFactoryRegistrar\configWithEmptyConfiguration.json" />
+    <EmbeddedResource Include="DI\ServiceProviderFactoryRegistrar\configWithEmptyConfigurationSource.json" />
+    <EmbeddedResource Include="DI\ServiceProviderFactoryRegistrar\configWithSecrets.json" />
+    <EmbeddedResource Include="DI\ServiceProviderFactoryRegistrar\secrets.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2">
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="xunit" Version="2.9.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
