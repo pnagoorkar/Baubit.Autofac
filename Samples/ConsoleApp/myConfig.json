@@ -7,9 +7,12 @@
       }
     },
     {
-      "type": "Baubit.Logging.DI.Default.Module, Baubit",
-      "configuration": {
-        "addConsole": true
+      "type": "Baubit.DI.EmptyModule, Baubit",
+      "configurationSource": {
+        "embeddedJsonResources": [
+          "Baubit;Logging.DI.Default.Config.defaultLogging.json",
+          "Baubit;Logging.DI.Default.Config.consoleEnabled.json"
+        ]
       }
     }
   ]
