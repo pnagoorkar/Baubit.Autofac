@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Baubit.Configuration;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Baubit.Autofac.DI
 {

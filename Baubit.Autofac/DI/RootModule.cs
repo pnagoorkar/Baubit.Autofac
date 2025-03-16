@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Baubit.Configuration;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Baubit.Autofac.DI
 {
@@ -22,9 +24,13 @@ namespace Baubit.Autofac.DI
         {
         }
 
-        public new void Load(ContainerBuilder containerBuilder)
+        public new void Load(ContainerBuilder containerBuilder, IServiceCollection services = null)
         {
-            base.Load(containerBuilder);
+            if (services == null) services = new ServiceCollection();
+            base.Load(containerBuilder, services);
+            containerBuilder.Populate(services);
         }
+
+        public void Load(ContainerBuilder containerBuilder) => Load(containerBuilder, null);
     }
 }
