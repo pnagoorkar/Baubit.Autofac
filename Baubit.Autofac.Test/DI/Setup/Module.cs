@@ -23,7 +23,6 @@ namespace Baubit.Autofac.Test.DI.Setup
         {
             containerBuilder.Register(context => new Component(Configuration.SomeString, Configuration.SomeSecretString))
                             .SingleInstance();
-            base.Load(containerBuilder);
         }
     }
 }

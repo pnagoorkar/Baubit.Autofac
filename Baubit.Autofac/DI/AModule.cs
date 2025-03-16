@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Baubit.Autofac.DI
 {
-    public interface IModule
+    public interface IModule : Baubit.DI.IModule
     {
-        void Load(ContainerBuilder containerBuilder, IServiceCollection services = null);
+        void Load(ContainerBuilder containerBuilder);
     }
     public abstract class AModule<TConfiguration> : Baubit.DI.AModule<TConfiguration>, IModule where TConfiguration : AConfiguration
     {
@@ -28,19 +28,6 @@ namespace Baubit.Autofac.DI
             throw new NotSupportedException();
         }
 
-        public virtual void Load(ContainerBuilder containerBuilder, IServiceCollection services = null)
-        {
-            foreach (var module in NestedModules)
-            {
-                if (module is IModule autofacModule)
-                {
-                    autofacModule.Load(containerBuilder, services);
-                }
-                else
-                {
-                    module.Load(services);
-                }
-            }
-        }
+        public abstract void Load(ContainerBuilder containerBuilder);
     }
 }
