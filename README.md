@@ -28,7 +28,6 @@ public class MyModule : AModule<MyConfiguration>
         containerBuilder.Register(context => new Component(Configuration.SomeString, Configuration.SomeSecretString))
                         .SingleInstance();
         //register other services as needed
-        base.Load(services);
     }
 }
 ```
