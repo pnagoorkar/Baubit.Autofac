@@ -3,6 +3,7 @@ using Baubit.Autofac.DI;
 using Baubit.Autofac.Test.DI.Setup;
 using Baubit.Configuration;
 using Baubit.Reflection;
+using FluentResults;
 using System.Runtime.InteropServices;
 
 namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
@@ -39,7 +40,9 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
         {
             var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
 
-            var component = configurationSource.Build().Load().Resolve<Component>();
+            var component = configurationSource.Build()
+                                               .Bind(config => config.Load())
+                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
 
             Assert.NotNull(component);
             Assert.False(string.IsNullOrEmpty(component.SomeString));
@@ -58,7 +61,9 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
 
             var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
 
-            var component = configurationSource.Build().Load().Resolve<Component>();
+            var component = configurationSource.Build()
+                                               .Bind(config => config.Load())
+                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
 
             Assert.NotNull(component);
             Assert.False(string.IsNullOrEmpty(component.SomeString));
@@ -71,7 +76,9 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
         {
             var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
 
-            var component = configurationSource.Build().Load().Resolve<Component>();
+            var component = configurationSource.Build()
+                                               .Bind(config => config.Load())
+                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
 
             Assert.NotNull(component);
         }
@@ -82,7 +89,9 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
         {
             var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
 
-            var component = configurationSource.Build().Load().Resolve<Component>();
+            var component = configurationSource.Build()
+                                               .Bind(config => config.Load())
+                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
 
             Assert.NotNull(component);
         }

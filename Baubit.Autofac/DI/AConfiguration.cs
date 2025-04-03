@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Baubit.Configuration;
+using FluentResults;
 using Microsoft.Extensions.Configuration;
 
 namespace Baubit.Autofac.DI
@@ -10,18 +11,24 @@ namespace Baubit.Autofac.DI
 
     public static class ConfigurationExtensions
     {
-        public static IContainer Load(this IConfiguration configuration)
+        public static Result<IContainer> Load(this IConfiguration configuration)
         {
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.AddFrom(configuration);
-            return containerBuilder.Build();
+            return Result.Try(() =>
+            {
+                var containerBuilder = new ContainerBuilder();
+                containerBuilder.AddFrom(configuration);
+                return containerBuilder.Build();
+            });
         }
-        public static ContainerBuilder AddFrom(this ContainerBuilder containerBuilder, IConfiguration configuration)
+        public static Result<ContainerBuilder> AddFrom(this ContainerBuilder containerBuilder, IConfiguration configuration)
         {
-            var rootModule = new RootModule(configuration);
-            rootModule.Load(containerBuilder);
-            return containerBuilder;
+            return Result.Try(() =>
+            {
+                var rootModule = new RootModule(configuration);
+                rootModule.Load(containerBuilder);
+                return containerBuilder;
+            });
         }
-        public static ContainerBuilder AddFrom(this ContainerBuilder containerBuilder, ConfigurationSource configurationSource) => containerBuilder.AddFrom(configurationSource.Build());
+        public static Result<ContainerBuilder> AddFrom(this ContainerBuilder containerBuilder, ConfigurationSource configurationSource) => containerBuilder.AddFrom(configurationSource.Build().Value);
     }
 }
