@@ -1,10 +1,16 @@
 ﻿# Baubit.Autofac
 
-## Introduction
-Autofac support for [Baubit](https://github.com/pnagoorkar/Baubit)
+[![NuGet](https://img.shields.io/nuget/v/Baubit.Autofac.svg)](https://www.nuget.org/packages/Baubit.Autofac)
+
+[Autofac](https://github.com/autofac/Autofac) support for [Baubit](https://github.com/pnagoorkar/Baubit)
+
+## Features
+
+- **AutofacServiceProviderFactory:** Allows using ContainerBuilder to add services to the service provider.
+- **Seamless Integration:** Reuse existing Baubit modules (extending Baubit.DI.AModule<>) as a nested modules for a Baubit.Autofac.DI.AModule<>.
 
 ## 🚀 Getting Started
-```
+```bash
 dotnet add package Baubit.Autofac
 ```
 
@@ -51,7 +57,7 @@ var webApp = WebApplication.CreateBuilder()
                            .UseConfiguredServiceProviderFactory()
                            .Build();
 
-// use CORS, Auth and other middleware
+// use HTTPS, HSTS, CORS, Auth and other middleware
 // map endpoints
 
 await webApp.RunAsync();
