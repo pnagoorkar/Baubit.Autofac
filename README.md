@@ -6,8 +6,8 @@
 
 ## Features
 
-- **AutofacServiceProviderFactory:** Allows using ContainerBuilder to add services to the service provider.
-- **Seamless Integration:** Reuse existing Baubit modules (extending Baubit.DI.AModule<>) as a nested modules for a Baubit.Autofac.DI.AModule<>.
+- **AutofacServiceProviderFactory:** Use ContainerBuilder to add services to the service provider.
+- **Seamless Integration:** Reuse existing Baubit modules (extending Baubit.DI.AModule<>) as nested modules for a Baubit.Autofac.DI.AModule<>.
 
 ## 🚀 Getting Started
 ```bash
