@@ -1,16 +1,18 @@
 ﻿using Autofac;
+using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
 using Baubit.Configuration;
+using Baubit.DI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Baubit.Autofac.DI
 {
-    internal sealed class RootModuleConfiguration : AConfiguration
+    public sealed class RootModuleConfiguration : ARootModuleConfiguration
     {
-
+        public ContainerBuildOptions ContainerBuildOptions { get; init; }
     }
-    internal sealed class RootModule : AModule<RootModuleConfiguration>
+    public sealed class RootModule : ARootModule<RootModuleConfiguration, AutofacServiceProviderFactory, ContainerBuilder>, IModule
     {
         public RootModule(ConfigurationSource configurationSource) : base(configurationSource)
         {
@@ -24,7 +26,7 @@ namespace Baubit.Autofac.DI
         {
         }
 
-        public override void Load(ContainerBuilder containerBuilder)
+        public void Load(ContainerBuilder containerBuilder)
         {
             var baubitModules = new List<Baubit.DI.IModule>();
             var baubitAutofacModules = new List<IModule>();
@@ -37,6 +39,10 @@ namespace Baubit.Autofac.DI
             containerBuilder.Populate(services);
             baubitAutofacModules.ForEach(module => module.Load(containerBuilder));
         }
+
+        protected override Action<ContainerBuilder> GetConfigureAction() => Load;
+
+        protected override AutofacServiceProviderFactory GetServiceProviderFactory() => new AutofacServiceProviderFactory(Configuration.ContainerBuildOptions);
     }
 
     public static class ModuleExtensions
