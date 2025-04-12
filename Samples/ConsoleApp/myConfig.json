@@ -5,15 +5,14 @@
       "configuration": {
         "myStringProperty": "some string value"
       }
-    },
+    }
+  ],
+  "moduleSources": [
     {
-      "type": "Baubit.DI.EmptyModule, Baubit",
-      "configurationSource": {
-        "embeddedJsonResources": [
-          "Baubit;Logging.DI.Default.Config.defaultLogging.json",
-          "Baubit;Logging.DI.Default.Config.consoleEnabled.json"
-        ]
-      }
+      "embeddedJsonResources": [
+        "Baubit;Logging.DI.Default.Config.defaultLogging.json",
+        "Baubit;Logging.DI.Default.Config.consoleEnabled.json"
+      ]
     }
   ]
 }

@@ -13,22 +13,16 @@ namespace Baubit.Autofac.DI
     {
         public static Result<IContainer> Load(this IConfiguration configuration)
         {
-            return Result.Try(() =>
-            {
-                var containerBuilder = new ContainerBuilder();
-                containerBuilder.AddFrom(configuration);
-                return containerBuilder.Build();
-            });
+            return Result.Try(() => new ContainerBuilder())
+                         .Bind(containerBuilder => containerBuilder.AddFrom(configuration))
+                         .Bind(containerBuilder => Result.Try(() => containerBuilder.Build()));
         }
         public static Result<ContainerBuilder> AddFrom(this ContainerBuilder containerBuilder, IConfiguration configuration)
         {
-            return Result.Try(() =>
-            {
-                var rootModule = new RootModule(configuration);
-                rootModule.Load(containerBuilder);
-                return containerBuilder;
-            });
+            return Result.Try(() => new RootModule(configuration))
+                         .Bind(rootModule => Result.Try(() => rootModule.Load(containerBuilder)))
+                         .Bind(() => Result.Ok(containerBuilder));
         }
-        public static Result<ContainerBuilder> AddFrom(this ContainerBuilder containerBuilder, ConfigurationSource configurationSource) => containerBuilder.AddFrom(configurationSource.Build().Value);
+        public static Result<ContainerBuilder> AddFrom(this ContainerBuilder containerBuilder, ConfigurationSource configurationSource) => configurationSource.Build().Bind(containerBuilder.AddFrom);
     }
 }

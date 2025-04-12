@@ -97,3 +97,4 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
         }
     }
 }
+

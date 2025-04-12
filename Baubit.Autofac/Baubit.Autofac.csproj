@@ -6,10 +6,7 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <Version>$(PackageVersion)</Version>
-    <AssemblyVersion>$(PackageVersion)</AssemblyVersion>
-    <FileVersion>$(PackageVersion)</FileVersion>
-    <InformationalVersion>$(PackageVersion)</InformationalVersion>
+    <AssemblyVersion>$(AssemblyVersion)</AssemblyVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
@@ -29,7 +26,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
-    <PackageReference Include="Baubit" Version="2025.14.6" />
+    <PackageReference Include="Baubit" Version="2025.15.6" />
   </ItemGroup>
 
 </Project>

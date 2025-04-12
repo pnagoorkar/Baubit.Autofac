@@ -1,16 +1,54 @@
 ﻿using Autofac;
+using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
 using Baubit.Configuration;
+using Baubit.DI;
+using FluentResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Baubit.Autofac.DI
 {
-    internal sealed class RootModuleConfiguration : AConfiguration
+
+    public abstract class ARootModuleConfiguration : AConfiguration
     {
 
     }
-    internal sealed class RootModule : AModule<RootModuleConfiguration>
+    public sealed class RootModuleConfiguration : ARootModuleConfiguration
+    {
+        public ContainerBuildOptions ContainerBuildOptions { get; init; }
+    }
+
+    public abstract class ARootModule<TConfiguration,
+                                      TServiceProviderFactory,
+                                      TContainerBuilder> : AModule<TConfiguration>, IRootModule where TConfiguration : ARootModuleConfiguration
+                                                                                                  where TServiceProviderFactory : IServiceProviderFactory<TContainerBuilder>
+                                                                                                  where TContainerBuilder : notnull
+    {
+        protected ARootModule(ConfigurationSource configurationSource) : base(configurationSource)
+        {
+        }
+
+        protected ARootModule(IConfiguration configuration) : base(configuration)
+        {
+        }
+
+        protected ARootModule(TConfiguration configuration, List<AModule> nestedModules) : base(configuration, nestedModules)
+        {
+        }
+
+        public Result<THostApplicationBuilder> UseConfiguredServiceProviderFactory<THostApplicationBuilder>(THostApplicationBuilder hostApplicationBuilder) where THostApplicationBuilder : IHostApplicationBuilder
+        {
+            hostApplicationBuilder.ConfigureContainer(GetServiceProviderFactory(), GetConfigureAction());
+            return hostApplicationBuilder;
+        }
+
+        protected abstract TServiceProviderFactory GetServiceProviderFactory();
+        protected abstract Action<TContainerBuilder> GetConfigureAction();
+
+    }
+    public sealed class RootModule : ARootModule<RootModuleConfiguration, AutofacServiceProviderFactory, ContainerBuilder>, IModule
     {
         public RootModule(ConfigurationSource configurationSource) : base(configurationSource)
         {
@@ -37,6 +75,10 @@ namespace Baubit.Autofac.DI
             containerBuilder.Populate(services);
             baubitAutofacModules.ForEach(module => module.Load(containerBuilder));
         }
+
+        protected override Action<ContainerBuilder> GetConfigureAction() => Load;
+
+        protected override AutofacServiceProviderFactory GetServiceProviderFactory() => new AutofacServiceProviderFactory(Configuration.ContainerBuildOptions);
     }
 
     public static class ModuleExtensions
