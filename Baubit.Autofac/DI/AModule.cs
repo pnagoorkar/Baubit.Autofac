@@ -18,7 +18,7 @@ namespace Baubit.Autofac.DI
         {
         }
 
-        protected AModule(TConfiguration configuration, List<Baubit.DI.AModule> nestedModules) : base(configuration, nestedModules)
+        protected AModule(TConfiguration configuration, List<Baubit.DI.AModule> nestedModules, List<Baubit.DI.IConstraint> constraints) : base(configuration, nestedModules, constraints)
         {
         }
 

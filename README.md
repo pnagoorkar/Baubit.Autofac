@@ -27,7 +27,7 @@ public class MyModule : AModule<MyConfiguration>
 {
     public MyModule(ConfigurationSource configurationSource) : base(configurationSource) { }
     public MyModule(IConfiguration configuration) : base(configuration) { }
-    public MyModule(MyConfiguration configuration, List<AModule> nestedModules) : base(configuration, nestedModules) { }
+    public MyModule(MyConfiguration configuration, List<AModule> nestedModules, List<Baubit.DI.IConstraint> constraints) : base(configuration, nestedModules, constraints) { }
 
     public override void Load(ContainerBuilder containerBuilder)
     {

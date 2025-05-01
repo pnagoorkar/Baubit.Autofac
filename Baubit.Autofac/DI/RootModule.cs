@@ -3,6 +3,7 @@ using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
 using Baubit.Configuration;
 using Baubit.DI;
+using Baubit.Traceability;
 using FluentResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ namespace Baubit.Autofac.DI
         {
         }
 
-        protected ARootModule(TConfiguration configuration, List<AModule> nestedModules) : base(configuration, nestedModules)
+        protected ARootModule(TConfiguration configuration, List<AModule> nestedModules, List<IConstraint> constraints) : base(configuration, nestedModules, constraints)
         {
         }
 
@@ -58,8 +59,15 @@ namespace Baubit.Autofac.DI
         {
         }
 
-        public RootModule(RootModuleConfiguration moduleConfiguration, List<Baubit.DI.AModule> nestedModules) : base(moduleConfiguration, nestedModules)
+        public RootModule(RootModuleConfiguration configuration, List<AModule> nestedModules, List<IConstraint> constraints) : base(configuration, nestedModules, constraints)
         {
+        }
+
+        protected override void OnInitialized()
+        {
+            this.TryFlatten().Bind(modules => modules.Remove(this) ? Result.Ok(modules) : Result.Fail(string.Empty))
+                             .Bind(modules => modules.Aggregate(Result.Ok(), (seed, next) => seed.Bind(() => next.Constraints.CheckAll(modules))))
+                             .ThrowIfFailed();
         }
 
         public override void Load(ContainerBuilder containerBuilder)

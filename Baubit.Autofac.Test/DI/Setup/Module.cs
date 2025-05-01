@@ -15,7 +15,7 @@ namespace Baubit.Autofac.Test.DI.Setup
         {
         }
 
-        public Module(Configuration configuration, List<Baubit.DI.AModule> nestedModules) : base(configuration, nestedModules)
+        public Module(Configuration configuration, List<Baubit.DI.AModule> nestedModules, List<Baubit.DI.IConstraint> constraints) : base(configuration, nestedModules, constraints)
         {
         }
 
