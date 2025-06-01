@@ -1,9 +1,7 @@
-﻿using Autofac;
-using Baubit.Autofac.DI;
-using Baubit.Autofac.Test.DI.Setup;
+﻿using Baubit.Autofac.Test.DI.Setup;
 using Baubit.Configuration;
+using Baubit.DI;
 using Baubit.Reflection;
-using FluentResults;
 using System.Runtime.InteropServices;
 
 namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
@@ -38,11 +36,11 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
         [InlineData("config.json")]
         public void CanLoadModulesFromJson(string fileName)
         {
-            var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
-
-            var component = configurationSource.Build()
-                                               .Bind(config => config.Load())
-                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
+            var component = ConfigurationSourceBuilder.CreateNew()
+                                      .Bind(configSourceBuilder => configSourceBuilder.WithEmbeddedJsonResources($"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"))
+                                      .Bind(configurationSource => configurationSource.Build())
+                                      .Bind(configSource => ComponentBuilder<Component>.Create(configSource))
+                                      .Bind(componentSourceBuilder => componentSourceBuilder.Build()).ValueOrDefault;
 
             Assert.NotNull(component);
             Assert.False(string.IsNullOrEmpty(component.SomeString));
@@ -59,11 +57,11 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
 
             File.WriteAllText(SecretsPath, readResult.Value);
 
-            var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
-
-            var component = configurationSource.Build()
-                                               .Bind(config => config.Load())
-                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
+            var component = ConfigurationSourceBuilder.CreateNew()
+                                      .Bind(configSourceBuilder => configSourceBuilder.WithEmbeddedJsonResources($"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"))
+                                      .Bind(configurationSource => configurationSource.Build())
+                                      .Bind(configSource => ComponentBuilder<Component>.Create(configSource))
+                                      .Bind(componentSourceBuilder => componentSourceBuilder.Build()).ValueOrDefault;
 
             Assert.NotNull(component);
             Assert.False(string.IsNullOrEmpty(component.SomeString));
@@ -74,11 +72,11 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
         [InlineData("configWithEmptyConfiguration.json")]
         public void CanLoadModulesFromJsonWhenConfigurationIsEmpty(string fileName)
         {
-            var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
-
-            var component = configurationSource.Build()
-                                               .Bind(config => config.Load())
-                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
+            var component = ConfigurationSourceBuilder.CreateNew()
+                                      .Bind(configSourceBuilder => configSourceBuilder.WithEmbeddedJsonResources($"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"))
+                                      .Bind(configurationSource => configurationSource.Build())
+                                      .Bind(configSource => ComponentBuilder<Component>.Create(configSource))
+                                      .Bind(componentSourceBuilder => componentSourceBuilder.Build()).ValueOrDefault;
 
             Assert.NotNull(component);
         }
@@ -87,11 +85,11 @@ namespace Baubit.Autofac.Test.DI.ServiceProviderFactoryRegistrar
         [InlineData("configWithEmptyConfigurationSource.json")]
         public void CanLoadModulesFromJsonWhenConfigurationSourceIsEmpty(string fileName)
         {
-            var configurationSource = new ConfigurationSource { EmbeddedJsonResources = [$"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"] };
-
-            var component = configurationSource.Build()
-                                               .Bind(config => config.Load())
-                                               .Bind(container => Result.Try(() => container.Resolve<Component>())).Value;
+            var component = ConfigurationSourceBuilder.CreateNew()
+                                      .Bind(configSourceBuilder => configSourceBuilder.WithEmbeddedJsonResources($"{this.GetType().Assembly.GetName().Name};DI.ServiceProviderFactoryRegistrar.{fileName}"))
+                                      .Bind(configurationSource => configurationSource.Build())
+                                      .Bind(configSource => ComponentBuilder<Component>.Create(configSource))
+                                      .Bind(componentSourceBuilder => componentSourceBuilder.Build()).ValueOrDefault;
 
             Assert.NotNull(component);
         }
