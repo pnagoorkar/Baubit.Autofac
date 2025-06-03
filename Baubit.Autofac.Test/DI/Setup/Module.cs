@@ -1,11 +1,12 @@
 ﻿using Autofac;
-using Baubit.Autofac.DI;
+using Baubit.DI;
 using Baubit.Configuration;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Baubit.Autofac.Test.DI.Setup
 {
-    public class Module : AModule<Configuration>
+    public class Module : AModule<Configuration>, Baubit.Autofac.DI.IModule
     {
         public Module(ConfigurationSource configurationSource) : base(configurationSource)
         {
@@ -19,7 +20,7 @@ namespace Baubit.Autofac.Test.DI.Setup
         {
         }
 
-        public override void Load(ContainerBuilder containerBuilder)
+        public void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.Register(context => new Component(Configuration.SomeString, Configuration.SomeSecretString))
                             .SingleInstance();
