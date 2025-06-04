@@ -4,11 +4,15 @@ namespace ConsoleApp
 {
     public class MyComponent
     {
-        public string SomeStringValue { get; set; }
-
-        public MyComponent(string someStringValue, ILogger<MyComponent> logger)
+        public Settings InitSettings { get; set; }
+        public MyComponent(Settings settings, ILogger<MyComponent> logger)
         {
-            SomeStringValue = someStringValue;
+            InitSettings = settings;
+        }
+
+        public class Settings
+        {
+            public string SomeStringValue { get; init; }
         }
     }
 }

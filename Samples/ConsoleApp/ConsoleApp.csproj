@@ -8,14 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="myConfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="myConfig.json"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Baubit.Autofac\Baubit.Autofac.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="myConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

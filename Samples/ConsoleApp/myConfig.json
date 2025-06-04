@@ -3,7 +3,9 @@
     {
       "type": "ConsoleApp.MyModule, ConsoleApp",
       "configuration": {
-        "myStringProperty": "some string value"
+        "myComponentSettings": {
+          "myStringProperty": "some string value"
+        }
       }
     }
   ],

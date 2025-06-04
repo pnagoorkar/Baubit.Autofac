@@ -14,7 +14,7 @@ namespace ConsoleApp
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Component string value: {MyComponent.SomeStringValue}");
+            _logger.LogInformation($"Component string value: {MyComponent.InitSettings.SomeStringValue}");
             return Task.CompletedTask;
         }
 

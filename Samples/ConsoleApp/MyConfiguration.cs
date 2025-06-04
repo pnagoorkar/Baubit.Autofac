@@ -3,6 +3,6 @@ namespace ConsoleApp
 {
     public class MyConfiguration : AConfiguration
     {
-        public string MyStringProperty { get; set; }
+        public MyComponent.Settings MyComponentSettings { get; init; }
     }
 }

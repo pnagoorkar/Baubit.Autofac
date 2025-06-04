@@ -1,12 +1,13 @@
-﻿using Baubit.Configuration;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Baubit.Configuration;
 using Baubit.DI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace ConsoleApp
 {
-    public class MyModule : AModule<MyConfiguration>
+    public class MyModule : AModule<MyConfiguration>, Baubit.Autofac.DI.IModule
     {
         public MyModule(ConfigurationSource configurationSource) : base(configurationSource)
         {
@@ -20,11 +21,14 @@ namespace ConsoleApp
         {
         }
 
-        public override void Load(IServiceCollection services)
+        public void Load(ContainerBuilder containerBuilder)
         {
-            services.AddSingleton(serviceProvider => new MyComponent(Configuration.MyStringProperty, serviceProvider.GetRequiredService<ILogger<MyComponent>>()));
+            var services = new ServiceCollection();
             services.AddHostedService<MyHostedService>();
-            base.Load(services);
+            containerBuilder.RegisterType<MyComponent>()
+                            .WithParameters([new TypedParameter(typeof(MyComponent.Settings), Configuration.MyComponentSettings)])
+                            .SingleInstance();
+            containerBuilder.Populate(services);
         }
     }
 }
