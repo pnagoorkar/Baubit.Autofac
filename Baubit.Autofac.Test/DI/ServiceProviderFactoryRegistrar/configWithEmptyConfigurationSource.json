@@ -1,10 +1,15 @@
 {
-  "modules": [
-    {
-      "type": "Baubit.Autofac.Test.DI.Setup.Module, Baubit.Autofac.Test",
-      "configurationSource": {
+  "rootModule": {
+    "type": "Baubit.Autofac.DI.RootModule, Baubit.Autofac",
+    "configuration": {
+      "modules": [
+        {
+          "type": "Baubit.Autofac.Test.DI.Setup.Module, Baubit.Autofac.Test",
+          "configurationSource": {
 
-      }
+          }
+        }
+      ]
     }
-  ]
+  }
 }
